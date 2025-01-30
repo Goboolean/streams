@@ -17,17 +17,17 @@ jobs:
         run: |
           make build-app
 
-      - name: Login to Harbor
+      - name: Login to registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.HARBOR_REGISTRY }}
-          username: ${{ secrets.HARBOR_USERNAME }}
-          password: ${{ secrets.HARBOR_PASSWORD }}
+          registry: ${{ secrets.REGISTRY_DOMAIN }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Push Docker image to Harbor
+      - name: Push docker image to registry
         run: |
-          docker tag fetch-system/streams:latest ${{ secrets.HARBOR_REGISTRY }}/fetch-system/streams:${GITHUB_SHA::7}
-          docker push ${{ secrets.HARBOR_REGISTRY }}/fetch-system/streams:${GITHUB_SHA::7}
+          docker tag fetch-system/streams:latest ${{ secrets.REGISTRY_DOMAIN }}/fetch-system/streams:${GITHUB_SHA::7}
+          docker push ${{ secrets.REGISTRY_DOMAIN }}/fetch-system/streams:${GITHUB_SHA::7}
 
   kustomize:
     runs-on: ubuntu-latest
