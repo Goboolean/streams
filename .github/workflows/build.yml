@@ -37,11 +37,10 @@ jobs:
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Update image tag
-        uses: Goboolean/manifests/.github/actions/update-image-tag@main
+        uses: goboolean/manifests/.github/actions/update-image-tag@main
         with:
           app-name: ${{ github.event.repository.name }}
           image-tag: ${{ env.SHORT_SHA }}
-          id: ${{ secrets.IMAGE_TAG_UPDATE_APP_ID }}
-          private-key: ${{ secrets.IMAGE_TAG_UPDATE_APP_PRIVATE_KEY }}
+          github-token: ${{ secrets.GOBOOLEAN_IO_TOKEN }}
           profile: dev
           pull-request-link: ${{ github.event.pull_request.html_url }}
