@@ -20,14 +20,14 @@ jobs:
       - name: Login to registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.REGISTRY_DOMAIN }}
+          registry: registry.goboolean.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Push docker image to registry
         run: |
-          docker tag fetch-system/streams:latest ${{ secrets.REGISTRY_DOMAIN }}/fetch-system/streams:${GITHUB_SHA::7}
-          docker push ${{ secrets.REGISTRY_DOMAIN }}/fetch-system/streams:${GITHUB_SHA::7}
+          docker tag fetch-system/streams:latest registry.goboolean.io/fetch-system/streams:${GITHUB_SHA::7}
+          docker push registry.goboolean.io/fetch-system/streams:${GITHUB_SHA::7}
 
   kustomize:
     runs-on: ubuntu-latest
