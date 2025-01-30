@@ -13,36 +13,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Decrypt environment variables
-        run: |
-          echo "${{ secrets.ENV }}" base64 -d > .env
-
       - name: Build an app
         run: |
           make build-app
 
-      - name: Set up Docker daemon to using HTTP
-        run: |
-          sudo mkdir -p /etc/docker
-          echo '{"insecure-registries":["${{ secrets.HARBOR_REGISTRY }}:80"]}' | sudo tee /etc/docker/daemon.json
-          sudo systemctl restart docker
-
-      # Because you need to use the hostname set in the harbor, you need to use it if the domain is not assigned.
-      - name: Set up Harbor hostname
-        run: |
-          echo "${{ secrets.HARBOR_REGISTRY }} core.harbor.domain" | sudo tee -a /etc/hosts
-
       - name: Login to Harbor
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.HARBOR_REGISTRY }}:80
+          registry: ${{ secrets.HARBOR_REGISTRY }}
           username: ${{ secrets.HARBOR_USERNAME }}
           password: ${{ secrets.HARBOR_PASSWORD }}
 
       - name: Push Docker image to Harbor
         run: |
-          docker tag fetch-system/streams:latest ${{ secrets.HARBOR_REGISTRY }}:80/fetch-system/streams:${GITHUB_SHA::7}
-          docker push ${{ secrets.HARBOR_REGISTRY }}:80/fetch-system/streams:${GITHUB_SHA::7}
+          docker tag fetch-system/streams:latest ${{ secrets.HARBOR_REGISTRY }}/fetch-system/streams:${GITHUB_SHA::7}
+          docker push ${{ secrets.HARBOR_REGISTRY }}/fetch-system/streams:${GITHUB_SHA::7}
 
   kustomize:
     runs-on: ubuntu-latest
