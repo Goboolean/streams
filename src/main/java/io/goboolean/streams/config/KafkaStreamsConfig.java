@@ -21,6 +21,9 @@ public class KafkaStreamsConfig {
     @Value("${kafka.application-id-config}")
     private String applicationIdConfig;
 
+    @Value("${kafka.num-stream-threads}")
+    private int numStreamThreads;
+
     @Bean
     public Serde<Model.Trade> tradeSerde() {
         return new JsonSerde<>(Model.Trade.class);
@@ -36,6 +39,7 @@ public class KafkaStreamsConfig {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationIdConfig);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(StreamsConfig.NUM_STREAM_THREADS_CONFIG, numStreamThreads);
         return props;
     }
 

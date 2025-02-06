@@ -13,6 +13,7 @@ etcd:
 kafka:
   bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
   application-id-config: KAFKA_STREAMS_APP
+  num-stream-threads: 4
 
 open-telemetry:
   endpoint: ${OTEL_ENDPOINT}
