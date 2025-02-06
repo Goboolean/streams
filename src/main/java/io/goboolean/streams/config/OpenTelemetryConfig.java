@@ -1,6 +1,7 @@
 package io.goboolean.streams.config;
 
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter;
 import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
@@ -67,7 +68,11 @@ public class OpenTelemetryConfig {
         OpenTelemetry openTelemetry = OpenTelemetrySdk.builder()
                 .setMeterProvider(sdkMeterProvider)
                 .setLoggerProvider(sdkLoggerProvider)
-                .buildAndRegisterGlobal();
+                .build();
+
+        if (GlobalOpenTelemetry.get() == OpenTelemetry.noop()) {
+            GlobalOpenTelemetry.set(openTelemetry);
+        }
 
         OpenTelemetryAppender.install(openTelemetry);
 
