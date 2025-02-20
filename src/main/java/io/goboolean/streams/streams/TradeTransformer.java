@@ -25,10 +25,12 @@ public class TradeTransformer implements Transformer<Integer, Model.Trade, KeyVa
     public TradeTransformer(String storeName) {
         this.storeName = storeName;
 
+        /*
         this.counter = GlobalOpenTelemetry.getMeterProvider()
                 .get("fetch-system.streams")
                 .counterBuilder("fetch-system.streams.received.trade")
                 .build();
+        */
     }
 
     @Override

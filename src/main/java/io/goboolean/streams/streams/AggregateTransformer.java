@@ -36,10 +36,13 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.FiveSecTruncationer(),
                     Duration.ofSeconds(1),
+                    null,
+                    /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
+                    */
             );
         }
     }
@@ -50,10 +53,13 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.OneMinTruncationer(),
                     Duration.ofSeconds(5),
+                    null,
+                    /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
+                    */
             );
         }
     }
@@ -64,10 +70,13 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.FiveMinTruncationer(),
                     Duration.ofSeconds(10),
+                    null,
+                    /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
+                    */
             );
         }
     }
@@ -82,10 +91,12 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
     public KeyValue<Integer, Model.Aggregate> transform(Integer key, Model.Aggregate value) {
         counter.add(1);
 
+        /*
         GlobalOpenTelemetry.getMeterProvider()
                 .get("fetch-system.streams")
                 .counterBuilder("fetch-system.streams.received.aggregate")
                 .build();
+        */
 
         if (roundedTime == null) { // Case when the first record is received
             roundedTime = truncationer.truncate(value.timestamp());
