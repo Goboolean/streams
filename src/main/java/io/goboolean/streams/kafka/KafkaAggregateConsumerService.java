@@ -11,6 +11,8 @@ import java.util.Properties;
 
 public class KafkaAggregateConsumerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(KafkaAggregateConsumerService.class);
+
     private final Properties props;
     private final Consumer<Integer, Model.Aggregate> consumer;
     private final KafkaConsumerListener listener;
@@ -31,9 +33,15 @@ public class KafkaAggregateConsumerService {
 
         pollingThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
-                consumer.poll(100).forEach(record -> {
-                    listener.onMessage(record.value());
-                });
+                try {
+                    consumer.poll(100).forEach(record -> {
+                        logger.debug("Received message - Topic: {}, Partition: {}, Offset: {}",
+                            record.topic(), record.partition(), record.offset());  
+                        listener.onMessage(record.value());
+                    });
+                } catch (Exception e) {
+                    logger.error("Error polling Kafka", e);
+                }
             }
         });
         pollingThread.start();

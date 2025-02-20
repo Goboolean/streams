@@ -68,11 +68,11 @@ public class OpenTelemetryConfig {
         OpenTelemetry openTelemetry = OpenTelemetrySdk.builder()
                 .setMeterProvider(sdkMeterProvider)
                 .setLoggerProvider(sdkLoggerProvider)
-                .build();
+                .buildAndRegisterGlobal(); 
 
-        if (GlobalOpenTelemetry.get() == OpenTelemetry.noop()) {
-            GlobalOpenTelemetry.set(openTelemetry);
-        }
+        //if (GlobalOpenTelemetry.get() == OpenTelemetry.noop()) {
+        //    GlobalOpenTelemetry.set(openTelemetry);
+        //}
 
         OpenTelemetryAppender.install(openTelemetry);
 
