@@ -36,7 +36,7 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.FiveSecTruncationer(),
                     Duration.ofSeconds(1),
-                    null,
+                    null
                     /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
@@ -53,7 +53,7 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.OneMinTruncationer(),
                     Duration.ofSeconds(5),
-                    null,
+                    null
                     /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
@@ -70,7 +70,7 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                     storeName,
                     new TimeTruncationer.FiveMinTruncationer(),
                     Duration.ofSeconds(10),
-                    null,
+                    null
                     /*
                     GlobalOpenTelemetry.getMeterProvider()
                             .get("fetch-system.streams")
