@@ -43,7 +43,6 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
                     */
-                    */
             );
         }
     }
@@ -61,7 +60,6 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
                     */
-                    */
             );
         }
     }
@@ -78,7 +76,6 @@ public class AggregateTransformer implements Transformer<Integer, Model.Aggregat
                             .get("fetch-system.streams")
                             .counterBuilder("fetch-system.streams.received.aggregate")
                             .build()
-                    */
                     */
             );
         }
